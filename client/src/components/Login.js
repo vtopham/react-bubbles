@@ -1,9 +1,38 @@
 import React, { useState } from 'react'
+import {useHistory} from 'react-router-dom'
 import axios from 'axios'
+import styled from 'styled-components'
+
+const Form = styled.form`
+* {
+  padding: 0
+}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .login-input {
+    display: flex;
+    width: 50%;
+    margin: 2% 0;
+    justify-content: space-between;
+
+
+
+    button {
+      width: 100%;
+      height: 30px;
+      border-radius: 5px;
+    }
+  }
+
+`
 
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
+
+  const history = useHistory()
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -22,7 +51,10 @@ const Login = () => {
     event.preventDefault();
     axios.
       post("http://localhost:5000/api/login", credentials)
-      .then(res => localStorage.setItem("token", res.data.payload))
+      .then(res => {
+        localStorage.setItem("token", res.data.payload)
+        history.push("/bubbles")
+      })
       .catch(err => console.log(err))
     
   }
@@ -31,7 +63,7 @@ const Login = () => {
   return (
     <>
       <h1>Welcome to the Bubble App!</h1>
-      <form onSubmit = {handleSubmit}>
+      <Form onSubmit = {handleSubmit}>
         <div className = "login-input">
           <label htmlFor = "username" id = "username">Username: </label>
           <input onChange = {handleChange} type = "text" name = "username" value = {credentials.username}/>
@@ -43,7 +75,7 @@ const Login = () => {
         <div className = "login-input">
           <button>Log In</button>
         </div>
-      </form>
+      </Form>
     </>
   );
 };
