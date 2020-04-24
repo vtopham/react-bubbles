@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { axiosWithAuth } from '../utils/axiosWithAuth'
+import styled from 'styled-components'
 
+const Form = styled.form`
+display: flex;
+
+
+`
 const initialColor = {
   color: "",
   code: { hex: "" }
@@ -27,20 +33,43 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
     axiosWithAuth()
       .put(`/api/colors/${colorToEdit.id}`,colorToEdit)
-        .then(/*NEED TO UPDATE COLORS*/)
+        .then(refreshColors())
         .catch(err => console.log(err))
-    refreshColors()
+    
   };
 
   const deleteColor = color => {
     
     axiosWithAuth()
       .delete(`/api/colors/${color.id}`)
-        .then(/*NEED TO UPDATE COLORS*/)
+        .then(refreshColors())
         .catch(err => console.log(err))
-    refreshColors()
+    
     // make a delete request to delete this color
   };
+
+  //FORM STUFF FOR SUBMIT
+
+  const initialNewColor = {color: "", code: ""}
+  const [newColor, setNewColor] = useState(initialNewColor)
+  const newColorSubmit = event => {
+    event.preventDefault()
+    axiosWithAuth()
+      .post('/api/colors',newColor)
+        .then(res => {
+          console.log(res)
+          refreshColors()
+        })
+        .catch(err => console.log(err))
+  }
+
+  const handleColorChange = event => {
+    event.preventDefault()
+    setNewColor({
+      ...newColor,
+      [event.target.name]: event.target.value
+    })
+  }
 
   return (
     <div className="colors-wrap">
@@ -96,7 +125,23 @@ const ColorList = ({ colors, updateColors }) => {
         </form>
       )}
       <div className="spacer" />
-      {/* stretch - build another form here to add a color */}
+      <div className = "new-color">
+      <h3>Add A New Color!</h3>
+        <Form onSubmit = {newColorSubmit}>
+          
+          <div className = "input-group">
+            <label htmlFor = "name" id = "name">Color Name: </label>
+            <input onChange = {handleColorChange} type = "text" name = "color" value = {newColor.color}/>
+          </div>
+          <div className = "input-group">
+            <label htmlFor = "code" id = "code">Color Hex: </label>
+            <input onChange = {handleColorChange} type = "text" name = "code"value = {newColor.code}/>
+          </div>
+          <div className = "input-group">
+            <button>Submit!</button>
+          </div>
+        </Form>
+      </div>
     </div>
   );
 };
