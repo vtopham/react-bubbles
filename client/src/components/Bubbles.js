@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Pack } from "@potion/layout";
 import { Svg, Circle, Ribbon } from "@potion/element";
+import { Pattern } from '@potion/extra'
 
 //use potion library to visualize bubbles
 const Bubbles = ({ colors }) => {
@@ -17,6 +18,7 @@ const Bubbles = ({ colors }) => {
     <div className="bubble-wrap">
       <p>bubbles</p>
       <Svg width={400} height={400}>
+        
         <Pack
           data={{
             children: bubbleData
@@ -32,13 +34,21 @@ const Bubbles = ({ colors }) => {
               .map(({ x, y, r, key }, i) => {
                 if (i < colors.length) {
                   return (
+                    <>
                     <Circle
                       key={key}
                       cx={x}
                       cy={y}
                       r={r}
                       fill={colors[i].code.hex}
+                      
                     />
+                    {/* <Pattern.Paths
+                      id='paths4'
+                      d='waves'
+                      stroke ={colors[i].code.hex}
+                      /> */}
+                    </>
                     //JUST FOR FUN (stretch)
                     // <Ribbon
                     //   key={key}
