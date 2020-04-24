@@ -12,6 +12,12 @@ const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
+  const refreshColors = _ => {
+    axiosWithAuth()
+      .get('/api/colors')
+      .then(res => updateColors(res.data))
+      .catch(err => console.log(err))
+  }
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -23,14 +29,16 @@ const ColorList = ({ colors, updateColors }) => {
       .put(`/api/colors/${colorToEdit.id}`,colorToEdit)
         .then(/*NEED TO UPDATE COLORS*/)
         .catch(err => console.log(err))
+    refreshColors()
   };
 
   const deleteColor = color => {
     
     axiosWithAuth()
       .delete(`/api/colors/${color.id}`)
-      .then(/*NEED TO UPDATE COLORS*/)
-      .catch(err => console.log(err))
+        .then(/*NEED TO UPDATE COLORS*/)
+        .catch(err => console.log(err))
+    refreshColors()
     // make a delete request to delete this color
   };
 
