@@ -34,7 +34,7 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route component = {Login} />
           {/* 
-            If the user is not logged in, we'll move them to the login page.
+            If the user is not logged in, we'll move them to the login page...
           */}
         </Switch>
       </AppDiv>
