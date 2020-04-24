@@ -13,22 +13,26 @@ const initialColor = {
   code: { hex: "" }
 };
 
+//show the list of colors with the ability to edit delete or add to them
 const ColorList = ({ colors, updateColors }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
+  //call this whenever you want to refresh the color list
   const refreshColors = _ => {
     axiosWithAuth()
       .get('/api/colors')
       .then(res => updateColors(res.data))
       .catch(err => console.log(err))
   }
+  //while editing
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
   };
 
+  //save your edits
   const saveEdit = e => {
     e.preventDefault();
     axiosWithAuth()
@@ -38,6 +42,7 @@ const ColorList = ({ colors, updateColors }) => {
     
   };
 
+  //delete a color
   const deleteColor = color => {
     
     axiosWithAuth()
@@ -45,13 +50,13 @@ const ColorList = ({ colors, updateColors }) => {
         .then(refreshColors())
         .catch(err => console.log(err))
     
-    // make a delete request to delete this color
   };
 
   //FORM STUFF FOR SUBMIT
 
-  const initialNewColor = {color: "", code: ""}
+  const initialNewColor = {color: "", code: "#"}
   const [newColor, setNewColor] = useState(initialNewColor)
+  //event for when you want to submit a new color, makes a post request to add it to the database
   const newColorSubmit = event => {
     event.preventDefault()
     axiosWithAuth()
@@ -63,6 +68,7 @@ const ColorList = ({ colors, updateColors }) => {
         .catch(err => console.log(err))
   }
 
+  //this sets changes in the color field to state
   const handleColorChange = event => {
     event.preventDefault()
     setNewColor({

@@ -34,8 +34,7 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route component = {Login} />
           {/* 
-            Build a PrivateRoute component that will 
-            display BubblePage when you're authenticated 
+            If the user is not logged in, we'll move them to the login page.
           */}
         </Switch>
       </AppDiv>

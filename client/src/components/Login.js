@@ -29,8 +29,7 @@ const Form = styled.form`
 `
 
 const Login = () => {
-  // make a post request to retrieve a token from the api
-  // when you have handled the token, navigate to the BubblePage route
+  
 
   const history = useHistory()
 
@@ -39,6 +38,7 @@ const Login = () => {
     password: ""
   })
 
+  //track changes using state
   const handleChange = event => {
     event.preventDefault();
     setCredentials({
@@ -47,6 +47,7 @@ const Login = () => {
     })
   }
 
+  //when the user hits the login button, do a post request to check credentials. If successful, store the token and navigate to the next page
   const handleSubmit = event => {
     event.preventDefault();
     axios.
