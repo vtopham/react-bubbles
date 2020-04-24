@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Pack } from "@potion/layout";
-import { Svg, Circle } from "@potion/element";
+import { Svg, Circle, Ribbon } from "@potion/element";
 
 //use potion library to visualize bubbles
 const Bubbles = ({ colors }) => {
@@ -39,6 +39,21 @@ const Bubbles = ({ colors }) => {
                       r={r}
                       fill={colors[i].code.hex}
                     />
+                    //JUST FOR FUN (stretch)
+                    // <Ribbon
+                    //   key={key}
+                    //   source={{
+                    //     startAngle: x,
+                    //     endAngle: y,
+                    //     radius: r,
+                    //   }}
+                    //   target={{
+                    //     startAngle: x *.5,
+                    //     endAngle: y * .5,
+                    //     radius: r,
+                    //   }}
+                    //   fill={colors[i].code.hex}
+                    //   />
                   );
                 }
                 return null;
